@@ -36,9 +36,10 @@ This project explores real-world database concepts including entity modeling, co
 
 ## Key Relationships
 
-One-to-Many: User → Properties, User → Bookings, Property → Reviews
-One-to-One: Booking → Payment
-Many-to-Many: User ↔ Messages (sender/recipient)
+- One-to-Many: User → Properties, User → Bookings, Property → Reviews
+- One-to-One: Booking → Payment
+- Many-to-Many: User ↔ Messages (sender/recipient)
+- Location → Properties: Dedicated location table for geographical data
 
 ## Project Structure
 
@@ -46,9 +47,35 @@ Many-to-Many: User ↔ Messages (sender/recipient)
 alx-airbnb-database/
 ├── ERD/
 │   └── requirements.md   # ER diagram
-├── normalization.md    # Normalization of schema report
+├── database-script-0x01/
+|   ├── README.md
+│   └── schema.sql  # Complete database schema (PostgreSQL)
+├── database-script-0x02/
+|   ├── README.md
+│   └── seed.sql    # Sample seed data
+├── normalization.md    # Normalization report and analysis
 ├── README.md             # Project overview
 ```
+
+## Normalization Improvements
+
+The database schema has been optimized to achieve Third Normal Form (3NF):
+
+1. Location Normalization
+    - Created dedicated location table
+    - Stores geographical data separately (street, city, country, coordinates)
+    - Eliminates transitive dependencies in property data
+
+2. Enhanced Constraints
+    - Geographical coordinate validation
+    - Booking date integrity checks
+    - Rating validation (1-5 scale)
+    - Payment amount verification
+
+3. Performance Optimization
+    - Comprehensive indexing strategy
+    - Geospatial indexes for location-based queries
+    - Automatic timestamp updates via triggers
 
 ## License
 
