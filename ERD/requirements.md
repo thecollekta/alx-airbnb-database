@@ -4,20 +4,24 @@
 
 Entity-Relationship Diagram (ERD) for the core Airbnb system. The ERD represent
 entities, attributes, relationships, and constraints described in the database
-specification below.
+specification below
 
-### Table of Contents
+---
+
+## Table of Contents
 
 [Airbnb ER Diagram Requirements](#airbnb-er-diagram-requirements)
 [Entities and Attributes](#entities-and-attributes)
-[User](#user)
-[Property](#property)
-[Booking](#booking)
-[Payment](#payment)
-[Review](#review)
-[Message](#message)
+    - [User](#user)
+    - [Property](#property)
+    - [Booking](#booking)
+    - [Payment](#payment)
+    - [Review](#review)
+    - [Message](#message)
 [Relationships](#relationships)
 [Airbnb Clone ER Diagram](#airbnb-clone-er-diagram)
+    - [Mermaid ER Diagram](#mermaid-er-diagram)
+    - [Lucid Chart ER Diagram](#lucid-chard-er-diagram)
 [Constraints Summary](#constraints-summary)
 
 ---
@@ -113,64 +117,66 @@ erDiagram
     PROPERTY ||--o{ REVIEW : receives
     USER ||--o{ MESSAGE : sends
     USER ||--o{ MESSAGE : receives
-
+    
     USER {
-        UUID user_id PK
-        VARCHAR first_name
-        VARCHAR last_name
-        VARCHAR email UNIQUE
-        VARCHAR password_hash
-        VARCHAR phone_number
-        ENUM role
-        TIMESTAMP created_at
+        uuid user_id PK
+        varchar first_name
+        varchar last_name
+        varchar email
+        varchar password_hash
+        varchar phone_number
+        enum role
+        timestamp created_at
     }
 
     PROPERTY {
-        UUID property_id PK
-        UUID host_id FK
-        VARCHAR name
-        TEXT description
-        VARCHAR location
-        DECIMAL pricepernight
-        TIMESTAMP created_at
-        TIMESTAMP updated_at
+        uuid property_id PK
+        uuid host_id FK
+        varchar name
+        text description
+        varchar location
+        decimal pricepernight
+        timestamp created_at
+        timestamp updated_at
     }
 
     BOOKING {
-        UUID booking_id PK
-        UUID property_id FK
-        UUID user_id FK
-        DATE start_date
-        DATE end_date
-        DECIMAL total_price
-        ENUM status
-        TIMESTAMP created_at
+        uuid booking_id PK
+        uuid property_id FK
+        uuid user_id FK
+        date start_date
+        date end_date
+        decimal total_price
+        enum status
+        timestamp created_at
     }
 
     PAYMENT {
-        UUID payment_id PK
-        UUID booking_id FK
-        DECIMAL amount
-        TIMESTAMP payment_date
-        ENUM payment_method
+        uuid payment_id PK
+        uuid booking_id FK
+        decimal amount
+        timestamp payment_date
+        enum payment_method
     }
 
     REVIEW {
-        UUID review_id PK
-        UUID property_id FK
-        UUID user_id FK
-        INTEGER rating
-        TEXT comment
-        TIMESTAMP created_at
+        uuid review_id PK
+        uuid property_id FK
+        uuid user_id FK
+        integer rating
+        text comment
+        timestamp created_at
     }
 
     MESSAGE {
-        UUID message_id PK
-        UUID sender_id FK
-        UUID recipient_id FK
-        TEXT message_body
-        TIMESTAMP sent_at
+        uuid message_id PK
+        uuid sender_id FK
+        uuid recipient_id FK
+        text message_body
+        timestamp sent_at
     }
+
+    
 ```
 
 ### Lucid Chard ER Diagram
