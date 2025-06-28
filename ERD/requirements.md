@@ -114,62 +114,62 @@ erDiagram
     USER ||--o{ MESSAGE : sends
     USER ||--o{ MESSAGE : receives
 
-    User {
-        UUID user_id PK "Indexed"
-        VARCHAR first_name "NOT NULL"
-        VARCHAR last_name "NOT NULL"
-        VARCHAR email "UNIQUE, NOT NULL, Indexed"
-        VARCHAR password_hash "NOT NULL"
-        VARCHAR phone_number "NULL"
-        ENUM role "guest|host|admin, NOT NULL"
-        TIMESTAMP created_at "DEFAULT CURRENT_TIMESTAMP"
+    USER {
+        UUID user_id PK
+        VARCHAR first_name
+        VARCHAR last_name
+        VARCHAR email UNIQUE
+        VARCHAR password_hash
+        VARCHAR phone_number
+        ENUM role
+        TIMESTAMP created_at
     }
-  
-    Property {
-        UUID property_id PK "Indexed"
-        UUID host_id FK "Indexed"
-        VARCHAR name "NOT NULL"
-        TEXT description "NOT NULL"
-        VARCHAR location "NOT NULL"
-        DECIMAL pricepernight "NOT NULL"
-        TIMESTAMP created_at "DEFAULT CURRENT_TIMESTAMP"
-        TIMESTAMP updated_at "ON UPDATE CURRENT_TIMESTAMP"
+
+    PROPERTY {
+        UUID property_id PK
+        UUID host_id FK
+        VARCHAR name
+        TEXT description
+        VARCHAR location
+        DECIMAL pricepernight
+        TIMESTAMP created_at
+        TIMESTAMP updated_at
     }
-  
-    Booking {
-        UUID booking_id PK "Indexed"
-        UUID property_id FK "Indexed"
-        UUID user_id FK
-        DATE start_date "NOT NULL"
-        DATE end_date "NOT NULL"
-        DECIMAL total_price "NOT NULL"
-        ENUM status "pending|confirmed|canceled, NOT NULL"
-        TIMESTAMP created_at "DEFAULT CURRENT_TIMESTAMP"
-    }
-  
-    Payment {
-        UUID payment_id PK "Indexed"
-        UUID booking_id FK "Indexed"
-        DECIMAL amount "NOT NULL"
-        TIMESTAMP payment_date "DEFAULT CURRENT_TIMESTAMP"
-        ENUM payment_method "credit_card|paypal|stripe, NOT NULL"
-    }
-  
-    Review {
-        UUID review_id PK "Indexed"
+
+    BOOKING {
+        UUID booking_id PK
         UUID property_id FK
         UUID user_id FK
-        INTEGER rating "CHECK: 1-5, NOT NULL"
-        TEXT comment "NOT NULL"
-        TIMESTAMP created_at "DEFAULT CURRENT_TIMESTAMP"
+        DATE start_date
+        DATE end_date
+        DECIMAL total_price
+        ENUM status
+        TIMESTAMP created_at
     }
-  
-    Message {
-        UUID message_id PK "Indexed"
+
+    PAYMENT {
+        UUID payment_id PK
+        UUID booking_id FK
+        DECIMAL amount
+        TIMESTAMP payment_date
+        ENUM payment_method
+    }
+
+    REVIEW {
+        UUID review_id PK
+        UUID property_id FK
+        UUID user_id FK
+        INTEGER rating
+        TEXT comment
+        TIMESTAMP created_at
+    }
+
+    MESSAGE {
+        UUID message_id PK
         UUID sender_id FK
         UUID recipient_id FK
-        TEXT message_body "NOT NULL"
-        TIMESTAMP sent_at "DEFAULT CURRENT_TIMESTAMP"
+        TEXT message_body
+        TIMESTAMP sent_at
     }
 ```
 
