@@ -16,12 +16,14 @@ This project explores real-world database concepts including entity modeling, co
 
 ## Table of Contents
 
-[ALX Airbnb Database Project](#alx-airbnb-database-project)
-[Project Overview](#project-objectives)
-[Database Features](#database-features)
-[Key Relationships](#key-relationships)
-[Project Structure](#project-structure)
-[License](#license)
+- [ALX Airbnb Database Project](#alx-airbnb-database-project)
+  - [Project Objectives](#project-objectives)
+  - [Table of Contents](#table-of-contents)
+  - [Database Features](#database-features)
+  - [Key Relationships](#key-relationships)
+  - [Project Structure](#project-structure)
+  - [Normalization Improvements](#normalization-improvements)
+  - [License](#license)
 
 ---
 
