@@ -1,10 +1,11 @@
-# Advanced SQL Joins Queries - Airbnb Clone Database
+# Advanced SQL Queries - Airbnb Clone Database
 
 This repository contains comprehensive SQL join queries demonstrating advanced database operations for the Airbnb clone project. The queries follow Django best practices and SQL performance optimization standards.
 
 ## Table of Contents
 
 - [Overview](#overview)
+- [File Structure](#files-structure)
 - [Database Schema](#database-schema)
 - [Query Categories](#query-categories)
 - [Performance Considerations](#performance-considerations)
@@ -21,9 +22,28 @@ The `joins_queries.sql` file contains complex SQL queries that demonstrate:
 - **Multi-table joins**: Complex business intelligence queries
 - **Performance optimization**: Indexed queries and efficient join strategies
 
+The `subqueries.sql` file contains advanced SQL subquery which focus on both correlated and non-correlated subqueries to demonstrate different query optimization techniques and use cases.
+
+## Files Structure
+
+```text
+database-adv-script/
+├── joins_queries.sql
+├── README.md
+└── subqueries.sql
+```
+
 ## Database Schema
 
-The queries are designed for the following main entities:
+The exercises use the normalized Airbnb clone database schema with the following key tables:
+
+- **user**: User accounts (guests, hosts, admins)
+- **location**: Normalized address data with geospatial coordinates
+- **property**: Property listings linked to locations and hosts
+- **booking**: Reservation records with status tracking
+- **payment**: Payment processing records
+- **review**: Property ratings and comments
+- **message**: User-to-user messaging system
 
 ```text
 ├── user (guests, hosts, admins)
@@ -84,6 +104,40 @@ The queries are designed for the following main entities:
 - Data quality assurance
 - User behavior analysis
 - System audit reports
+
+### 4. Non-Correlated Subqueries
+
+**Characteristics:**
+
+- Inner query executes once independently
+- Result is used by outer query
+- Generally more efficient for large datasets
+- Can be cached by query optimizer
+
+**Key Query:**
+
+- Find all properties where the average rating is greater than 4.0
+
+**Use Cases**:
+
+- Find properties with an average rating above a threshold.
+
+### 5. Correlated Subqueries
+
+**Characteristics:**
+
+- Inner query references outer query columns
+- Executes once for each outer query row
+- Useful for row-by-row comparisons
+- May require careful indexing for performance
+
+**Key Query:**
+
+- Find users who have made more than 3 bookings
+
+**Use Cases**:
+
+- To identify power users — e.g., users with more than 3 bookings.
 
 ## Performance Considerations
 
@@ -158,6 +212,8 @@ For optimal testing, ensure your database contains:
 
 When using these queries in Django:
 
+**Complex Joins:**
+
 ```python
 # Use raw SQL for complex joins
 from django.db import connection
@@ -172,6 +228,27 @@ def get_booking_analytics():
             WHERE b.status = 'confirmed'
         """)
         return cursor.fetchall()
+```
+
+**Properties with high ratings:**
+
+```python
+from django.db.models import Avg
+Property.objects.filter(
+    pk__in=Review.objects.values('property')
+    .annotate(avg_rating=Avg('rating'))
+    .filter(avg_rating__gt=4.0)
+    .values('property')
+)
+```
+
+**Users with multiple bookings:**
+
+```python
+from django.db.models import Count
+User.objects.annotate(
+    booking_count=Count('booking')
+).filter(booking_count__gt=3)
 ```
 
 ### Query Optimization
@@ -193,6 +270,12 @@ def get_booking_analytics():
    ```sql
    -- Regular performance analysis
    EXPLAIN (ANALYZE, BUFFERS) SELECT ...
+   -- Enable query timing
+   \timing on
+   -- Analyze query execution
+   EXPLAIN ANALYZE SELECT ...;
+   -- Check index usage
+   EXPLAIN (FORMAT JSON) SELECT ...;
    ```
 
 ### Code Quality Standards
@@ -221,6 +304,9 @@ def get_booking_analytics():
    - Consider pagination for web applications
    - Use appropriate work_mem settings
 
+4. Complex Logic
+   - Break into CTEs (Common Table Expressions) or temporary views
+
 ### Debugging Tips
 
 ```sql
@@ -239,6 +325,7 @@ GROUP BY column_name;
 - [PostgreSQL JOIN Documentation](https://www.postgresql.org/docs/current/queries-table-expressions.html)
 - [Django Raw SQL Queries](https://docs.djangoproject.com/en/stable/topics/db/sql/)
 - [SQL Performance Tuning](https://www.postgresql.org/docs/current/performance-tips.html)
+- [PostgreSQL Subquery Documentation](https://www.postgresql.org/docs/17/functions-subquery.html)
 
 ## License
 
